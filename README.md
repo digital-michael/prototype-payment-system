@@ -21,6 +21,7 @@ Prototype a payment system
 ## Placeholder
 ```mermaid
 graph LR;
+    APIG-->PTR;
     PTR-->Screening;
     Screening-->LBL;
     LBL-->PQ;
@@ -33,6 +34,7 @@ graph LR;
 ```
 
 # Components
+- APIG: API Gateway
 - PTR: Payment Transaction Request
 - LBL: Localized Business Logic for PTR with metadata
 - CPP: Client Payment Plugin
