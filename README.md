@@ -31,6 +31,9 @@ graph LR;
     CPP-->PIC-1;
     CPP-->PIC-2;
     CPP-->PIC-3;
+    CPP-->Reporting;
+    CPP-->FD;
+    CPP-->DAN;
 ```
 
 # Components
@@ -42,3 +45,5 @@ graph LR;
 - PQ: Processing Queues
 - AT: Audit Tables
 - IU: Inventor Update
+- FD: Fraud Detection
+- DA: Dashboard Alert and Notification
