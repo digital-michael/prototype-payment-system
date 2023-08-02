@@ -21,19 +21,75 @@ Prototype a payment system
 ## Placeholder
 ```mermaid
 graph LR;
-    APIG-->PTR;
-    PTR-->Screening;
-    Screening-->LBL;
-    LBL-->PQ;
-    PQ-->AT;
-    PQ-->IU;
-    LBL-->CPP;
-    CPP-->PIC-1;
-    CPP-->PIC-2;
-    CPP-->PIC-3;
-    CPP-->Reporting;
-    CPP-->FD;
-    CPP-->DAN;
+
+    clients-->Shopping_Cart;
+
+    subgraph integration
+       Shopping_Cart-->Javascript_Framework;
+       Javascript_Framework-->API_Gateway_External;
+    end
+
+    API_Gateway_External-->API_Gateway_Invoicing;
+    API_Gateway_External-->API_Gateway_Payments;
+    API_Gateway_External-->API_Gateway_Inventory;
+    API_Gateway_External-->API_Gateway_Shipping;
+    API_Gateway_External-->API_Gateway_Returns;
+    API_Gateway_External-->API_Gateway_Restocking;
+
+    subgraph Invoicing    
+       API_Gateway_Invoicing-->RESTFUL_Invoicing;
+       RESTFUL_Invoicing-->SDK_Invoicing;
+    end
+
+    subgraph Payments    
+       API_Gateway_Payments-->RESTFUL_Payments;
+       RESTFUL_Payments-->SDK_Payments;
+       SDK_Payments-->Payment_Transaction_Request;
+       Payment_Transaction_Request-->Screening;
+       Screening-->Localized_Business_Logic_for_PTR_with_metadata;
+       Localized_Business_Logic_for_PTR_with_metadata-->Processing_Queues;
+       Processing_Queues-->Audit_Tables;
+       Processing_Queues-->Inventor_Update;
+       Localized_Business_Logic_for_PTR_with_metadata-->Client_Payment_Plugin;
+       Client_Payment_Plugin-->PIC-1;
+       Client_Payment_Plugin-->PIC-2;
+       Client_Payment_Plugin-->PIC-3;
+
+       Inventor_Update-->RESTFUL_Invoicing;
+    end
+
+    subgraph Monitors
+      Reporting-->Processing_Queues;
+      Reporting-->Audit_Tables;
+      Reporting-->Inventor_Update;
+      Fraud_Detection-->Screening;
+      Fraud_Detection-->Processing_Queues;
+      Fraud_Detection-->Client_Payment_Plugin;
+      Process_Monitoring-->Processing_Queues;
+      Process_Monitoring-->Audit_Tables;
+      Process_Monitoring-->Inventor_Update;
+      Dashboard_Alert_and_Notification-->Fraud_Detection;
+      Dashboard_Alert_and_Notification-->Process_Monitoring;
+    end
+
+    subgraph Inventory    
+       API_Gateway_Inventory-->RESTFUL_Inventory;
+       RESTFUL_Inventory-->SDK_Inventory;
+    end
+    subgraph Shipping    
+       API_Gateway_Shipping-->RESTFUL_Shipping;
+       RESTFUL_Shipping-->SDK_Shipping;
+    end
+    subgraph Returns    
+       API_Gateway_Returns-->RESTFUL_Returns;
+       RESTFUL_Returns-->SDK_Returns;
+    end
+    subgraph Restocking    
+       API_Gateway_Restocking-->RESTFUL_Restocking;
+       RESTFUL_Restocking-->SDK_Restocking;
+    end
+
+
 ```
 
 # Components
