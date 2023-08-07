@@ -39,6 +39,14 @@ graph LR;
     subgraph Invoicing    
        API_Gateway_Invoicing-->RESTFUL_Invoicing;
        RESTFUL_Invoicing-->SDK_Invoicing;
+       SDK_Invoicing-->pre_order;
+       SDK_Invoicing-->pre_payment;
+       SDK_Invoicing-->order;
+       SDK_Invoicing-->POS_payment;
+       SDK_Invoicing-->invoice_service_first;
+       SDK_Invoicing-->invoice_service_recurring;
+       SDK_Invoicing-->invoice_service_terms;
+
     end
 
     subgraph Payments    
